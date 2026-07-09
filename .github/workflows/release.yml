@@ -1,0 +1,70 @@
+name: Release ML Banner Suite
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-package:
+    name: Validate PHP/JS + Package ZIP + Upload Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: PHP syntax check
+        run: |
+          find ml-banner-suite -type f -name '*.php' \
+            -not -path '*/lib/plugin-update-checker/*' \
+            -print0 | xargs -0 -n1 php -l
+
+      - name: JS syntax check
+        run: |
+          find ml-banner-suite -type f -name '*.js' \
+            -not -path '*/lib/plugin-update-checker/*' \
+            -print0 | xargs -0 -n1 node --check
+
+      - name: Detect version from header
+        id: version
+        run: |
+          VERSION=$(grep -E '^[[:space:]]*\*[[:space:]]*Version:' ml-banner-suite/ml-banner-suite.php | head -n1 | sed -E 's/.*Version:[[:space:]]*([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Detected version: $VERSION"
+
+      - name: Package ZIP
+        run: bash scripts/package.sh
+
+      - name: Upload ZIP asset to release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ML Banner Suite v${{ steps.version.outputs.version }}
+          body: |
+            ## Mudanças
+
+            Veja o changelog completo em `readme.txt` dentro do ZIP.
+
+            ## Instalação
+
+            Baixe o ZIP `ml-banner-suite-v${{ steps.version.outputs.version }}.zip` e envie pelo WordPress > Plugins > Adicionar novo.
+
+            ## Atualização
+
+            Esta versão substitui automaticamente qualquer versão 2.x instalada.
+          files: |
+            ml-banner-suite-v${{ steps.version.outputs.version }}.zip
+          fail_on_unmatched_files: true
+          generate_release_notes: true

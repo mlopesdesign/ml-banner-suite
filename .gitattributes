@@ -1,0 +1,22 @@
+# Linguist overrides
+ml-banner-suite/lib/plugin-update-checker linguist-vendored
+
+# Line endings
+*.php    text eol=lf
+*.js     text eol=lf
+*.css    text eol=lf
+*.po     text eol=lf
+*.pot    text eol=lf
+*.mo     binary
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.svg    text eol=lf
+*.zip    binary
+*.md     text eol=lf
+*.txt    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.sh     text eol=lf
+*.ps1    text eol=crlf
