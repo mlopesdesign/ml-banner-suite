@@ -4,7 +4,7 @@ Tags: banner, banners, advertising, adsense, shortcode, carousel, slider
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,10 @@ This base package includes:
 3. Open **ML Banner Suite** in the admin sidebar.
 
 == Changelog ==
+
+= 3.0.1 =
+* Atualizações automáticas passam a vir do repositório público de releases (ml-banner-suite-releases); o código-fonte passa a ser privado.
+* Filtro de asset do atualizador mais estrito: aceita só ml-banner-suite.zip ou ml-banner-suite-v<versão>.zip.
 
 = 3.0.0 =
 * Adds an isolated Google AdSense module without changing the existing banner, statistics, licensing, or GitHub updater engines.

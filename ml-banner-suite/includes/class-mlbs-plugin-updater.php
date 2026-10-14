@@ -51,7 +51,8 @@ final class MLBS_Plugin_Updater
 
                         if (is_object($api) && method_exists($api, 'enableReleaseAssets')) {
                             $api->enableReleaseAssets(
-                                '/(^|\/)(ml-banner-suite|ml-banner-suite-[^\/]+)\.zip($|[?&#])/i',
+                                // So o ZIP oficial: ml-banner-suite.zip ou ml-banner-suite-v<versao>[-sufixo].zip.
+                                '/(^|\/)ml-banner-suite(-v?[0-9][0-9.]*[a-z0-9.-]*)?\.zip($|[?&#])/i',
                                 \YahnisElsts\PluginUpdateChecker\v5p6\Vcs\Api::REQUIRE_RELEASE_ASSETS
                             );
                         }
