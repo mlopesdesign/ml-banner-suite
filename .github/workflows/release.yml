@@ -45,6 +45,14 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Detected version: $VERSION"
 
+      - name: Validar tag == versao do header e da constante
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          CONST=$(grep -E "define\('MLBS_VERSION'" ml-banner-suite/ml-banner-suite.php | head -1 | sed -E "s/.*'MLBS_VERSION', *'([0-9.]+)'.*/\1/")
+          STABLE=$(grep -m1 "Stable tag:" ml-banner-suite/readme.txt | sed -E 's/.*Stable tag: *([0-9.]+).*/\1/')
+          echo "tag=$TAG header=${{ steps.version.outputs.version }} const=$CONST stable=$STABLE"
+          [ "$TAG" = "${{ steps.version.outputs.version }}" ] && [ "$TAG" = "$CONST" ] && [ "$TAG" = "$STABLE" ] || { echo "Versoes divergentes"; exit 1; }
+
       - name: Package ZIP
         run: bash scripts/package.sh
 
