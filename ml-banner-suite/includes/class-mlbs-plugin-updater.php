@@ -51,10 +51,22 @@ final class MLBS_Plugin_Updater
 
                         if (is_object($api) && method_exists($api, 'enableReleaseAssets')) {
                             $api->enableReleaseAssets(
-                                '/(^|\/)(ml-banner-suite|ml-banner-suite-[^\/]+)\.zip($|[?&#])/i',
+                                // So o ZIP oficial: ml-banner-suite.zip ou ml-banner-suite-v<versao>[-sufixo].zip.
+                                '/(^|\/)ml-banner-suite(-v?[0-9][0-9.]*[a-z0-9.-]*)?\.zip($|[?&#])/i',
                                 \YahnisElsts\PluginUpdateChecker\v5p6\Vcs\Api::REQUIRE_RELEASE_ASSETS
                             );
                         }
+                    }
+
+                    // So releases. Sem isto, quando a release mais nova nao tem o ZIP certo o PUC cai para
+                    // a "ultima tag" e oferece o zipball (codigo-fonte / so README) como atualizacao.
+                    if (method_exists($this->checker, 'getUniqueName')) {
+                        add_filter(
+                            $this->checker->getUniqueName('vcs_update_detection_strategies'),
+                            static function ($strategies) {
+                                return is_array($strategies) ? array_intersect_key($strategies, array('latest_release' => true)) : $strategies;
+                            }
+                        );
                     }
 
                     add_filter('puc_request_info_result-' . $this->slug, array($this, 'inject_puc_plugin_info'), 10, 2);
@@ -560,7 +572,7 @@ final class MLBS_Plugin_Updater
                     continue;
                 }
 
-                if (preg_match('/(^|\/)(ml-banner-suite|ml-banner-suite-[^\/]+)\.zip$/i', (string) $asset['name'])) {
+                if (preg_match('/(^|\/)ml-banner-suite(-v?[0-9][0-9.]*[a-z0-9.-]*)?\.zip$/i', (string) $asset['name'])) {
                     $package = (string) $asset['browser_download_url'];
                     break;
                 }

@@ -45,12 +45,21 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Detected version: $VERSION"
 
+      - name: Validar tag == versao do header e da constante
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          CONST=$(grep -E "define\('MLBS_VERSION'" ml-banner-suite/ml-banner-suite.php | head -1 | sed -E "s/.*'MLBS_VERSION', *'([0-9.]+)'.*/\1/")
+          STABLE=$(grep -m1 "Stable tag:" ml-banner-suite/readme.txt | sed -E 's/.*Stable tag: *([0-9.]+).*/\1/')
+          echo "tag=$TAG header=${{ steps.version.outputs.version }} const=$CONST stable=$STABLE"
+          [ "$TAG" = "${{ steps.version.outputs.version }}" ] && [ "$TAG" = "$CONST" ] && [ "$TAG" = "$STABLE" ] || { echo "Versoes divergentes"; exit 1; }
+
       - name: Package ZIP
         run: bash scripts/package.sh
 
       - name: Upload ZIP asset to release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.ref_name }}
           name: ML Banner Suite v${{ steps.version.outputs.version }}
           body: |
             ## Mudanças
@@ -68,3 +77,29 @@ jobs:
             ml-banner-suite-v${{ steps.version.outputs.version }}.zip
           fail_on_unmatched_files: true
           generate_release_notes: true
+
+      # O updater (3.0.1+) consulta SOMENTE o repositorio publico de releases.
+      # Requer o secret GH_RELEASE_TOKEN (PAT com contents:write em ml-banner-suite-releases).
+      - name: Verificar token do repositorio de releases
+        id: reltoken
+        env:
+          T: ${{ secrets.GH_RELEASE_TOKEN }}
+        run: if [ -n "$T" ]; then echo "ok=true" >> $GITHUB_OUTPUT; else echo "ok=false" >> $GITHUB_OUTPUT; echo "::warning::GH_RELEASE_TOKEN ausente - publique o ZIP manualmente em ml-banner-suite-releases"; fi
+
+      - name: Publicar no repositorio publico de releases
+        if: steps.reltoken.outputs.ok == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          repository: mlopesdesign/ml-banner-suite-releases
+          token: ${{ secrets.GH_RELEASE_TOKEN }}
+          tag_name: ${{ github.ref_name }}
+          name: ML Banner Suite v${{ steps.version.outputs.version }}
+          body: |
+            ## ML Banner Suite v${{ steps.version.outputs.version }}
+
+            Changelog completo em `readme.txt` dentro do ZIP.
+          files: |
+            ml-banner-suite-v${{ steps.version.outputs.version }}.zip
+          draft: false
+          prerelease: false
+          make_latest: true

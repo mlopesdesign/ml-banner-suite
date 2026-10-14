@@ -3,14 +3,14 @@
  * Plugin Name:       ML Banner Suite
  * Plugin URI:        https://tools.mlopesdesign.com.br
  * Description:       Gestão profissional de banners e integração isolada com Google AdSense, com grupos, shortcodes, estatísticas e atualização pelo GitHub.
- * Version:           3.0.0
+ * Version:           3.0.1
  * Author:            Marcio Lopes
  * Author URI:        https://mlopesdesign.com.br
  * Text Domain:       ml-banner-suite
  * Domain Path:       /languages
  * Requires at least: 6.0
  * Requires PHP:      7.4
- * Update URI:        https://github.com/mlopesdesign/ml-banner-suite
+ * Update URI:        https://github.com/mlopesdesign/ml-banner-suite-releases
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  *
@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
 }
 
 if (! defined('MLBS_VERSION')) {
-    define('MLBS_VERSION', '3.0.0');
+    define('MLBS_VERSION', '3.0.1');
 }
 
 if (! defined('MLBS_PLUGIN_FILE')) {
@@ -50,7 +50,8 @@ if (! defined('MLBS_WEBSITE_URL')) {
 }
 
 if (! defined('MLBS_GITHUB_REPO_URL')) {
-    define('MLBS_GITHUB_REPO_URL', 'https://github.com/mlopesdesign/ml-banner-suite');
+    // Repositorio PUBLICO so com os ZIPs; o codigo-fonte sera privado (PUC sem token recebe 404 em repo privado).
+    define('MLBS_GITHUB_REPO_URL', 'https://github.com/mlopesdesign/ml-banner-suite-releases');
 }
 
 if (! defined('MLBS_GITHUB_REPO_BRANCH')) {
