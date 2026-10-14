@@ -94,6 +94,10 @@ jobs:
           token: ${{ secrets.GH_RELEASE_TOKEN }}
           tag_name: ${{ github.ref_name }}
           name: ML Banner Suite v${{ steps.version.outputs.version }}
+          body: |
+            ## ML Banner Suite v${{ steps.version.outputs.version }}
+
+            Changelog completo em `readme.txt` dentro do ZIP.
           files: |
             ml-banner-suite-v${{ steps.version.outputs.version }}.zip
           draft: false
