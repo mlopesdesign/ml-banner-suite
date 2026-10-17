@@ -4,7 +4,7 @@ Tags: banner, banners, advertising, adsense, shortcode, carousel, slider
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.1
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,13 @@ This base package includes:
 3. Open **ML Banner Suite** in the admin sidebar.
 
 == Changelog ==
+
+= 3.1.0 =
+* Licença pelo site tools.mlopesdesign.com.br (ML License Hub). O servidor antigo license.mlopesdesign.com.br não é mais consultado.
+* Aceita a chave do Pacote Agência (todos os plugins ML em vários sites).
+* Teste grátis de 30 dias por site. Quem já usava o plugin recebe o teste automaticamente na primeira visita ao painel.
+* Sem teste ou licença: o painel fica só para leitura (criar, editar, apagar, clonar e ordenar banners e grupos, enviar/excluir imagens e salvar o AdSense). Os banners e anúncios publicados continuam no ar e nada é apagado.
+* Tela de licença refeita: sem campos de servidor e Product ID.
 
 = 3.0.1 =
 * Atualizações automáticas passam a vir do repositório público de releases (ml-banner-suite-releases); o código-fonte passa a ser privado.

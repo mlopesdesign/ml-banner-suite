@@ -38,7 +38,7 @@ function hydrateAdminRowMeta(){
 function convertNoticesToToasts(){
   $('.toplevel_page_mlbs-dashboard .notice, .ml-banner-suite_page_mlbs-statistics .notice, .ml-banner-suite_page_mlbs-shortcodes .notice, .ml-banner-suite_page_mlbs-settings .notice, .ml-banner-suite_page_mlbs-license .notice').each(function(){
     var $notice=$(this); var text=$.trim($notice.text());
-    if(!text){return;}
+    if(!text||$notice.hasClass('mlbs-lock-notice')){return;}
     var type=$notice.hasClass('notice-error')?'error':'success';
     showToast(text,type);
     $notice.remove();

@@ -39,9 +39,6 @@ class MLBS_Settings
             'stats_retention_days'       => '',
             'panel_language'             => '',
             'default_alignment'          => 'center',
-            'license_server_url'         => 'https://license.mlopesdesign.com.br',
-            'license_product_id'         => 'ml-banner-suite',
-            'license_product_name'       => 'ML Banner Suite',
         );
     }
 

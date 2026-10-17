@@ -285,6 +285,7 @@ class MLBS_Banner_Editor
 
     public function ajax_upload_banner_image()
     {
+        MLBS_License_Manager::guard_write(true);
         check_ajax_referer('mlbs_admin_nonce', 'nonce');
         if (! current_user_can('upload_files')) {
             wp_send_json_error(array('message' => __('Permissão negada.', MLBS_TEXT_DOMAIN)), 403);
@@ -338,6 +339,7 @@ class MLBS_Banner_Editor
 
     public function ajax_delete_banner_image()
     {
+        MLBS_License_Manager::guard_write(true);
         check_ajax_referer('mlbs_admin_nonce', 'nonce');
         if (! current_user_can('upload_files')) {
             wp_send_json_error(array('message' => __('Permissão negada.', MLBS_TEXT_DOMAIN)), 403);
@@ -400,6 +402,7 @@ class MLBS_Banner_Editor
 
     public function ajax_save_banner_order()
     {
+        MLBS_License_Manager::guard_write(true);
         check_ajax_referer('mlbs_admin_nonce', 'nonce');
         if (! current_user_can('edit_posts')) {
             wp_send_json_error(array('message' => __('Permissão negada.', MLBS_TEXT_DOMAIN)), 403);
@@ -568,6 +571,9 @@ class MLBS_Banner_Editor
         if ($post->post_type !== MLBS_Post_Types::POST_TYPE) {
             return $actions;
         }
+        if (MLBS_License_Manager::is_locked()) {
+            return $actions;
+        }
 
         $clone_url = wp_nonce_url(add_query_arg(array(
             'mlbs_action' => 'clone_banner',
@@ -588,6 +594,7 @@ class MLBS_Banner_Editor
         $post_id = isset($_GET['post_id']) ? absint($_GET['post_id']) : 0;
 
         if ($action === 'clone_banner' && $post_id && isset($_GET['_wpnonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['_wpnonce'])), 'mlbs_clone_banner_' . $post_id)) {
+            MLBS_License_Manager::guard_write();
             $new_id = $this->clone_banner($post_id);
             if ($new_id) {
                 wp_safe_redirect(admin_url('post.php?post=' . $new_id . '&action=edit'));
