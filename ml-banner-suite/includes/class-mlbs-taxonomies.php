@@ -129,7 +129,7 @@ class MLBS_Taxonomies
 
     public function save_group_fields($term_id)
     {
-        if (! current_user_can('manage_categories')) {
+        if (! current_user_can('manage_categories') || MLBS_License_Manager::is_locked()) {
             return;
         }
 

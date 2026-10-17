@@ -68,6 +68,7 @@ class MLBS_AdSense_Admin
 
     public function handle_save()
     {
+        MLBS_License_Manager::guard_write();
         if (! current_user_can('manage_options')) {
             wp_die(esc_html__('Permissão insuficiente.', MLBS_TEXT_DOMAIN));
         }

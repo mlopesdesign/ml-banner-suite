@@ -180,4 +180,11 @@
 /* 2.0.5 toast hardening */
 .mlbs-toast .mlbs-toast-body,.mlbs-toast .mlbs-toast-title,.mlbs-toast .mlbs-toast-message,.mlbs-toast button,.mlbs-toast a{color:#fff!important;fill:#fff!important}
 
-.mlbs-library-head{align-items:flex-start;gap:12px}.mlbs-library-head .description{margin:4px 0 0}.mlbs-wp-library{margin-top:12px}.mlbs-library-empty{grid-column:1/-1;padding:18px;border:1px dashed #c3c4c7;border-radius:12px;background:#f6f7f7;color:#646970;text-align:center}.mlbs-library-footer{display:flex;justify-content:center;margin-top:14px}
+.mlbs-library-head{align-items:flex-start;gap:12px}.mlbs-library-head .description{margin:4px 0 0}.mlbs-wp-library{margin-top:12px}.mlbs-library-empty{grid-column:1/-1;padding:18px;border:1px dashed #c3c4c7;border-radius:12px;background:#f6f7f7;color:#646970;text-align:center}.mlbs-library-footer{display:flex;justify-content:center;margin-top:14px}/* 3.1.0 licença (ML License Hub) */
+.mlbs-badge.is-amber{background:#fdf0e6!important;border-color:#f3d2b5!important;color:#a3521a!important}
+body .notice.mlbs-lock-notice,body .notice.mlbs-license-notice{display:block!important}
+.notice.mlbs-lock-notice{border-left-color:#d97706!important;margin:18px 20px 0 0!important;max-width:1420px}
+.mlbs-license-inline-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.mlbs-license-actions{display:flex;gap:10px;flex-wrap:wrap}
+.mlbs-plan-table td{vertical-align:top;line-height:1.5}
+.mlbs-plan-table td:first-child{width:34%}

@@ -114,15 +114,7 @@ class MLBS_Admin_Pages
 
     public function render_license_page()
     {
-        $summary = $this->license_manager->get_license_summary();
-        $license_state = $summary['state'];
-        $license_product_name = $summary['product_name'];
-        $license_product_id = $summary['product_id'];
-        $license_server_url = $summary['server_url'];
-        $license_domain = $summary['domain'];
-        $site_fingerprint = $summary['site_fingerprint'];
-        $plan_label = $summary['plan_label'];
-        $status_label = $summary['status_label'];
+        $license = $this->license_manager->get_license_summary();
         include MLBS_PLUGIN_DIR . 'admin/views/license.php';
     }
 }
