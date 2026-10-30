@@ -16,6 +16,43 @@ class MLBS_Helpers
         return add_query_arg(array('page' => $page), admin_url('admin.php'));
     }
 
+    /**
+     * Barra de navegação única do painel (3.1.1): mesmas abas, mesma ordem e mesmo
+     * estilo em todas as telas, com o botão "Adicionar novo banner" sempre visível.
+     * Antes cada tela tinha a sua cópia (ordem e aba AdSense diferentes) e as telas
+     * nativas do WP herdavam o link azul sublinhado do core.
+     */
+    public static function render_admin_nav($current = '')
+    {
+        $items = array(
+            'dashboard'  => array(self::admin_url('mlbs-dashboard'), __('Dashboard', MLBS_TEXT_DOMAIN)),
+            'banners'    => array(admin_url('edit.php?post_type=' . MLBS_Post_Types::POST_TYPE), __('Banners', MLBS_TEXT_DOMAIN)),
+            'groups'     => array(admin_url('edit-tags.php?taxonomy=mlbs_group&post_type=' . MLBS_Post_Types::POST_TYPE), __('Grupos', MLBS_TEXT_DOMAIN)),
+            'statistics' => array(self::admin_url('mlbs-statistics'), __('Estatísticas', MLBS_TEXT_DOMAIN)),
+            'shortcodes' => array(self::admin_url('mlbs-shortcodes'), __('Shortcodes', MLBS_TEXT_DOMAIN)),
+        );
+        if (class_exists('MLBS_AdSense_Admin')) {
+            $items['adsense'] = array(self::admin_url('mlbs-adsense'), __('AdSense', MLBS_TEXT_DOMAIN));
+        }
+        $items['settings'] = array(self::admin_url('mlbs-settings'), __('Configurações', MLBS_TEXT_DOMAIN));
+        $items['license']  = array(self::admin_url('mlbs-license'), __('Licença e Planos', MLBS_TEXT_DOMAIN));
+
+        echo '<div class="mlbs-navbar">';
+        echo '<nav class="mlbs-tabs" aria-label="ML Banner Suite">';
+        foreach ($items as $key => $item) {
+            $active = $key === $current ? ' is-active' : '';
+            $aria   = $key === $current ? ' aria-current="page"' : '';
+            echo '<a class="mlbs-tab' . esc_attr($active) . '" href="' . esc_url($item[0]) . '"' . $aria . '>' . esc_html($item[1]) . '</a>';
+        }
+        echo '</nav>';
+        if (current_user_can('edit_posts')) {
+            echo '<a class="mlbs-add-banner" href="' . esc_url(admin_url('post-new.php?post_type=' . MLBS_Post_Types::POST_TYPE)) . '">';
+            echo '<span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span>' . esc_html__('Adicionar novo banner', MLBS_TEXT_DOMAIN);
+            echo '</a>';
+        }
+        echo '</div>';
+    }
+
     public static function yes_no($value)
     {
         return $value ? __('Sim', MLBS_TEXT_DOMAIN) : __('Não', MLBS_TEXT_DOMAIN);

@@ -188,3 +188,15 @@ body .notice.mlbs-lock-notice,body .notice.mlbs-license-notice{display:block!imp
 .mlbs-license-actions{display:flex;gap:10px;flex-wrap:wrap}
 .mlbs-plan-table td{vertical-align:top;line-height:1.5}
 .mlbs-plan-table td:first-child{width:34%}
+
+/* 3.1.1 navegação única: mesmas abas e mesmo estilo em todas as telas + botão Adicionar novo banner */
+.mlbs-navbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:0 0 20px}
+.mlbs-navbar .mlbs-tabs{margin:0!important;flex:1 1 auto}
+.mlbs-wrap .mlbs-navbar a.mlbs-tab,.mlbs-native-shell .mlbs-navbar a.mlbs-tab,.mlbs-native-shell-notice .mlbs-navbar a.mlbs-tab{display:inline-flex!important;align-items:center!important;min-height:40px!important;padding:0 16px!important;border-radius:999px!important;background:#fff!important;border:1px solid #cad9de!important;color:var(--mlbs-text)!important;text-decoration:none!important;font-size:13px!important;font-weight:600!important;line-height:1!important;box-shadow:none!important;white-space:nowrap!important;transition:border-color .18s ease,color .18s ease,background .18s ease}
+.mlbs-wrap .mlbs-navbar a.mlbs-tab:hover,.mlbs-native-shell .mlbs-navbar a.mlbs-tab:hover,.mlbs-wrap .mlbs-navbar a.mlbs-tab:focus,.mlbs-native-shell .mlbs-navbar a.mlbs-tab:focus{border-color:var(--mlbs-accent)!important;color:var(--mlbs-accent)!important;background:var(--mlbs-accent-soft)!important;box-shadow:none!important;outline:none}
+.mlbs-wrap .mlbs-navbar a.mlbs-tab.is-active,.mlbs-native-shell .mlbs-navbar a.mlbs-tab.is-active{background:var(--mlbs-accent)!important;border-color:var(--mlbs-accent)!important;color:#fff!important}
+.mlbs-wrap .mlbs-navbar a.mlbs-add-banner,.mlbs-native-shell .mlbs-navbar a.mlbs-add-banner{display:inline-flex!important;align-items:center!important;gap:6px;min-height:42px!important;padding:0 20px!important;border-radius:999px!important;background:#1f7a3d!important;border:1px solid #1f7a3d!important;color:#fff!important;text-decoration:none!important;font-size:14px!important;font-weight:700!important;line-height:1!important;white-space:nowrap!important;box-shadow:0 6px 16px rgba(31,122,61,.22)!important;transition:background .18s ease}
+.mlbs-wrap .mlbs-navbar a.mlbs-add-banner:hover,.mlbs-native-shell .mlbs-navbar a.mlbs-add-banner:hover,.mlbs-wrap .mlbs-navbar a.mlbs-add-banner:focus,.mlbs-native-shell .mlbs-navbar a.mlbs-add-banner:focus{background:#17602f!important;border-color:#17602f!important;color:#fff!important;outline:none}
+.mlbs-navbar a.mlbs-add-banner .dashicons{width:18px;height:18px;font-size:18px;line-height:18px;color:#fff}
+@media (max-width:782px){.mlbs-navbar{flex-direction:column;align-items:stretch}.mlbs-wrap .mlbs-navbar a.mlbs-add-banner,.mlbs-native-shell .mlbs-navbar a.mlbs-add-banner{justify-content:center}}
+.post-type-mlbs_banner.edit-php .wrap>.page-title-action{display:none!important}
