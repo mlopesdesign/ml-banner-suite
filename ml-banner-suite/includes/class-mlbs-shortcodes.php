@@ -244,12 +244,15 @@ class MLBS_Shortcodes
         $duration  = max(1000, absint($meta['_mlbs_duration']));
         $click_url = '';
         if (! empty($meta['_mlbs_target_url'])) {
-            $click_url = add_query_arg(array(
-                'action'    => 'mlbs_banner_click',
-                'banner_id' => $banner_id,
-                'redirect'  => rawurlencode($meta['_mlbs_target_url']),
-                'nonce'     => wp_create_nonce('mlbs_banner_click_' . $banner_id),
-            ), admin_url('admin-post.php'));
+            // 3.2.0: o destino vem do cadastro do banner (sem parâmetro "redirect" e sem nonce).
+            // O nonce vencia em até 24 h e, em página com cache, o visitante caía em "Link inválido"
+            // e o clique não era contado.
+            $click_url = (int) $this->settings->get('track_clicks', 1) === 1
+                ? add_query_arg(array(
+                    'action'    => 'mlbs_banner_click',
+                    'banner_id' => $banner_id,
+                ), admin_url('admin-post.php'))
+                : $meta['_mlbs_target_url'];
         }
         ?>
         <div class="mlbs-item mlbs-item-align-<?php echo esc_attr($alignment); ?>" data-mlbs-banner-id="<?php echo esc_attr((string) $banner_id); ?>" style="<?php echo esc_attr('--mlbs-item-duration:' . $duration . 'ms'); ?>">
@@ -262,16 +265,41 @@ class MLBS_Shortcodes
         <?php
     }
 
+    /**
+     * Visita automatizada (robôs de busca, monitores, pré-carregamento) não conta.
+     */
+    private static function is_bot_request()
+    {
+        $ua = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower((string) wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
+        if ($ua === '') {
+            return true;
+        }
+        foreach (array('bot', 'crawl', 'spider', 'slurp', 'preview', 'facebookexternalhit', 'whatsapp', 'headless', 'lighthouse', 'pingdom', 'uptime', 'monitor', 'curl', 'wget', 'python-', 'httpclient', 'okhttp') as $needle) {
+            if (strpos($ua, $needle) !== false) {
+                return true;
+            }
+        }
+        $purpose = isset($_SERVER['HTTP_SEC_PURPOSE']) ? (string) $_SERVER['HTTP_SEC_PURPOSE'] : (isset($_SERVER['HTTP_PURPOSE']) ? (string) $_SERVER['HTTP_PURPOSE'] : '');
+        return stripos($purpose, 'prefetch') !== false;
+    }
+
+    /**
+     * Impressão: contador público. Sem exigir nonce (3.2.0) — em página com cache o nonce
+     * vencia e todas as impressões daquela página se perdiam. Só conta banner que pode ser
+     * exibido, no máximo 50 por chamada, e ignora robôs.
+     */
     public function ajax_track_impression()
     {
-        check_ajax_referer('mlbs_track_impression', 'nonce');
+        if ((int) $this->settings->get('track_impressions', 1) !== 1 || self::is_bot_request()) {
+            wp_send_json_success(array('tracked' => 0));
+        }
 
         $raw_ids = isset($_POST['banner_ids']) ? (array) wp_unslash($_POST['banner_ids']) : array();
+        $raw_ids = array_slice(array_unique(array_map('absint', $raw_ids)), 0, 50);
         $tracked = 0;
 
         foreach ($raw_ids as $banner_id) {
-            $banner_id = absint($banner_id);
-            if (! $banner_id || ! $this->can_render_banner($banner_id)) {
+            if (! $banner_id || get_post_type($banner_id) !== MLBS_Post_Types::POST_TYPE || ! $this->can_render_banner($banner_id)) {
                 continue;
             }
 
@@ -284,22 +312,33 @@ class MLBS_Shortcodes
         wp_send_json_success(array('tracked' => $tracked));
     }
 
+    /**
+     * Clique: conta e redireciona para o destino CADASTRADO no banner (nunca para um endereço
+     * vindo da URL — sem redirecionamento aberto). Links antigos já em cache (com redirect e
+     * nonce) continuam funcionando: o nonce não é mais exigido e o destino é sempre o cadastrado.
+     */
     public function handle_banner_click()
     {
         $banner_id = isset($_GET['banner_id']) ? absint($_GET['banner_id']) : 0;
-        $nonce = isset($_GET['nonce']) ? sanitize_text_field(wp_unslash($_GET['nonce'])) : '';
-        $redirect = isset($_GET['redirect']) ? rawurldecode((string) wp_unslash($_GET['redirect'])) : '';
-        $redirect = esc_url_raw($redirect);
+        $target    = '';
 
-        if (! $banner_id || ! $redirect || ! wp_verify_nonce($nonce, 'mlbs_banner_click_' . $banner_id)) {
-            wp_die(esc_html__('Link inválido.', MLBS_TEXT_DOMAIN));
+        if ($banner_id && get_post_type($banner_id) === MLBS_Post_Types::POST_TYPE) {
+            $target = esc_url_raw((string) get_post_meta($banner_id, '_mlbs_target_url', true));
         }
 
-        $current = (int) get_post_meta($banner_id, '_mlbs_clicks', true);
-        update_post_meta($banner_id, '_mlbs_clicks', $current + 1);
-        MLBS_Database::increment_event($banner_id, 'click', 1);
+        if ($target === '') {
+            wp_safe_redirect(home_url('/'));
+            exit;
+        }
 
-        wp_redirect($redirect);
+        if ((int) $this->settings->get('track_clicks', 1) === 1 && ! self::is_bot_request()) {
+            $current = (int) get_post_meta($banner_id, '_mlbs_clicks', true);
+            update_post_meta($banner_id, '_mlbs_clicks', $current + 1);
+            MLBS_Database::increment_event($banner_id, 'click', 1);
+        }
+
+        nocache_headers();
+        wp_redirect($target, 302, 'ML Banner Suite');
         exit;
     }
 }

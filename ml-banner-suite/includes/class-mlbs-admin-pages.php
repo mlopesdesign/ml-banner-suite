@@ -79,25 +79,23 @@ class MLBS_Admin_Pages
 
     public function render_statistics_page()
     {
-        global $wpdb;
+        $filters      = MLBS_Stats::get_filters();
+        $table_exists = MLBS_Stats::table_exists();
+        $ids          = MLBS_Stats::group_banner_ids($filters['group']);
+        $totals       = MLBS_Stats::sum(MLBS_Stats::per_banner($filters['from'], $filters['to'], $ids));
 
-        $stats_table = MLBS_Database::get_stats_table_name();
-        $banner_total = (int) wp_count_posts(MLBS_Post_Types::POST_TYPE)->publish;
-        $active_query = new WP_Query(array(
-            'post_type'      => MLBS_Post_Types::POST_TYPE,
-            'post_status'    => 'publish',
-            'posts_per_page' => -1,
-            'fields'         => 'ids',
-            'meta_query'     => array(
-                array(
-                    'key'   => '_mlbs_is_active',
-                    'value' => '1',
-                ),
-            ),
-        ));
-        $active_total = (int) $active_query->found_posts;
-        wp_reset_postdata();
-        $table_exists = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $stats_table));
+        // Período anterior de mesmo tamanho, para a comparação dos cartões.
+        $prev_to   = gmdate('Y-m-d', strtotime($filters['from'] . ' -1 day'));
+        $prev_from = gmdate('Y-m-d', strtotime($prev_to . ' -' . ($filters['days'] - 1) . ' days'));
+        $previous  = MLBS_Stats::sum(MLBS_Stats::per_banner($prev_from, $prev_to, $ids));
+
+        $daily      = MLBS_Stats::daily($filters['from'], $filters['to'], $ids);
+        $rows       = MLBS_Stats::banner_rows($filters);
+        $group_rows = MLBS_Stats::group_rows($filters);
+        $groups     = get_terms(array('taxonomy' => 'mlbs_group', 'hide_empty' => false));
+        $first_date = MLBS_Stats::first_date();
+        $settings   = $this->settings->get_all();
+
         include MLBS_PLUGIN_DIR . 'admin/views/statistics.php';
     }
 

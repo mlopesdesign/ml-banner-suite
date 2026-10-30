@@ -200,3 +200,62 @@ body .notice.mlbs-lock-notice,body .notice.mlbs-license-notice{display:block!imp
 .mlbs-navbar a.mlbs-add-banner .dashicons{width:18px;height:18px;font-size:18px;line-height:18px;color:#fff}
 @media (max-width:782px){.mlbs-navbar{flex-direction:column;align-items:stretch}.mlbs-wrap .mlbs-navbar a.mlbs-add-banner,.mlbs-native-shell .mlbs-navbar a.mlbs-add-banner{justify-content:center}}
 .post-type-mlbs_banner.edit-php .wrap>.page-title-action{display:none!important}
+
+/* 3.2.0 Estatísticas */
+.mlbs-stats-filter{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;background:#fff;border:1px solid var(--mlbs-border);border-radius:18px;padding:16px 18px;margin:0 0 10px}
+.mlbs-stats-periods{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--mlbs-surface-2,#f7f9fa);border:1px solid var(--mlbs-border)}
+.mlbs-wrap .mlbs-stats-periods a.mlbs-period{display:inline-flex;align-items:center;min-height:32px;padding:0 14px;border-radius:999px;color:var(--mlbs-text);text-decoration:none;font-weight:600;font-size:13px}
+.mlbs-wrap .mlbs-stats-periods a.mlbs-period:hover{color:var(--mlbs-accent);background:#fff}
+.mlbs-wrap .mlbs-stats-periods a.mlbs-period.is-active{background:var(--mlbs-accent);color:#fff}
+.mlbs-stats-fields{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.mlbs-stats-fields label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--mlbs-muted)}
+.mlbs-stats-fields input[type=date],.mlbs-stats-fields select{min-height:36px;border:1px solid #c9d8dc;border-radius:10px;padding:0 10px;color:var(--mlbs-text);background:#fff;box-shadow:none}
+.mlbs-wrap .mlbs-btn{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 16px;border-radius:999px;border:1px solid var(--mlbs-accent);background:var(--mlbs-accent);color:#fff;font-weight:600;font-size:13px;text-decoration:none;cursor:pointer;line-height:1}
+.mlbs-wrap .mlbs-btn:hover,.mlbs-wrap .mlbs-btn:focus{background:var(--mlbs-accent-2,#0f4f5d);border-color:var(--mlbs-accent-2,#0f4f5d);color:#fff}
+.mlbs-wrap .mlbs-btn.is-ghost{background:#fff;color:var(--mlbs-accent)}
+.mlbs-wrap .mlbs-btn.is-ghost:hover{background:var(--mlbs-accent-soft);color:var(--mlbs-accent)}
+.mlbs-wrap .mlbs-btn .dashicons{width:16px;height:16px;font-size:16px;line-height:16px}
+.mlbs-stats-range{margin:0 0 16px 4px;color:var(--mlbs-muted);font-size:13px}
+.mlbs-stats-alert{margin:0 0 16px;padding:14px 16px;border-radius:14px;border:1px solid #e5d29c;background:#fffaf0;color:#765b11}
+.mlbs-stats-wrap .mlbs-kpi-card{display:flex;flex-direction:column;gap:8px}
+.mlbs-delta{font-size:12px;font-weight:600}
+.mlbs-delta.is-up{color:#1f7a3d}.mlbs-delta.is-down{color:#b42318}.mlbs-delta.is-neutral{color:var(--mlbs-muted)}
+.mlbs-stats-chart-card,.mlbs-stats-table-card{margin-bottom:18px}
+.mlbs-chart-legend{display:flex;gap:16px;font-size:12px;font-weight:600;color:var(--mlbs-muted)}
+.mlbs-chart-legend span{display:inline-flex;align-items:center;gap:6px}
+.mlbs-chart-legend i{display:inline-block;width:12px;height:12px;border-radius:3px}
+.mlbs-chart-legend i.is-imp{background:#9cc6cf}.mlbs-chart-legend i.is-clk{background:#e07a1f;border-radius:999px}
+.mlbs-chart-scroll{overflow-x:auto}
+.mlbs-chart{display:block;width:100%;min-width:640px;height:auto}
+.mlbs-chart .mlbs-grid{stroke:#e6eef0;stroke-width:1}
+.mlbs-chart .mlbs-axis{font-size:11px;fill:var(--mlbs-muted)}
+.mlbs-chart .mlbs-axis.is-imp{fill:#4f8792}.mlbs-chart .mlbs-axis.is-clk{fill:#b7621a}
+.mlbs-chart .mlbs-bar{fill:#9cc6cf}
+.mlbs-chart .mlbs-hit{fill:transparent}
+.mlbs-chart .mlbs-pt:hover .mlbs-bar{fill:var(--mlbs-accent)}
+.mlbs-chart .mlbs-pt:hover .mlbs-hit{fill:rgba(21,94,111,.06)}
+.mlbs-chart .mlbs-line{fill:none;stroke:#e07a1f;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;pointer-events:none}
+.mlbs-chart .mlbs-dot{fill:#fff;stroke:#e07a1f;stroke-width:2;pointer-events:none}
+.mlbs-stats-empty{padding:28px;text-align:center;border:1px dashed #b9d0d5;border-radius:14px;color:var(--mlbs-muted);background:#fbfefe}
+.mlbs-table-scroll{overflow-x:auto}
+.mlbs-stats-table{width:100%;border-collapse:collapse;font-size:13px}
+.mlbs-stats-table th{padding:10px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mlbs-muted);border-bottom:1px solid var(--mlbs-border);white-space:nowrap}
+.mlbs-wrap .mlbs-stats-table th a{color:inherit;text-decoration:none}
+.mlbs-wrap .mlbs-stats-table th a:hover{color:var(--mlbs-accent)}
+.mlbs-stats-table td{padding:10px 12px;border-bottom:1px solid #edf4f6;vertical-align:middle;color:var(--mlbs-text)}
+.mlbs-stats-table tbody tr:hover td{background:#f8fbfc}
+.mlbs-stats-table .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mlbs-stats-table .is-muted{color:var(--mlbs-muted)}
+.mlbs-stats-table .col-rank{width:28px;color:var(--mlbs-muted);font-variant-numeric:tabular-nums}
+.mlbs-stats-table .col-ctr{font-weight:700;color:var(--mlbs-accent)}
+.mlbs-wrap a.mlbs-stats-banner{display:flex;align-items:center;gap:12px;color:var(--mlbs-text);text-decoration:none;font-weight:600;min-width:220px}
+.mlbs-wrap a.mlbs-stats-banner:hover{color:var(--mlbs-accent)}
+.mlbs-stats-thumb{flex:0 0 72px;width:72px;height:40px;border-radius:8px;overflow:hidden;background:#f1f6f7;border:1px solid #e1ebee;display:flex;align-items:center;justify-content:center}
+.mlbs-stats-thumb img{width:100%;height:100%;object-fit:contain}
+.mlbs-status{display:inline-flex;padding:3px 9px;border-radius:999px;background:var(--mlbs-accent-soft);color:var(--mlbs-accent);font-size:11px;font-weight:700;white-space:nowrap}
+.mlbs-share{display:block;height:4px;margin-top:6px;border-radius:999px;background:#edf4f6;overflow:hidden;min-width:70px}
+.mlbs-share i{display:block;height:100%;background:#9cc6cf;border-radius:999px}
+.mlbs-stats-note{margin:14px 2px 0;color:var(--mlbs-muted);font-size:12px;line-height:1.5}
+@media (max-width:782px){.mlbs-stats-filter{flex-direction:column;align-items:stretch}.mlbs-stats-periods{flex-wrap:wrap;border-radius:16px}.mlbs-stats-fields label{flex:1 1 140px}.mlbs-stats-wrap .mlbs-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mlbs-wrap .mlbs-stats-table td a{color:var(--mlbs-accent);text-decoration:none;font-weight:600}
+.mlbs-wrap .mlbs-stats-table td a:hover{text-decoration:underline}
