@@ -4,7 +4,7 @@ Tags: banner, banners, advertising, adsense, shortcode, carousel, slider
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.1.1
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,12 @@ This base package includes:
 3. Open **ML Banner Suite** in the admin sidebar.
 
 == Changelog ==
+
+= 3.2.0 =
+* Novo: tela Estatísticas completa — impressões, cliques e CTR do período (7, 30, 90 dias, 12 meses, tudo ou datas livres), comparação com o período anterior, gráfico por dia/semana/mês, ranking por banner (com miniatura, ordenável, total desde o início), totais por grupo, filtro por grupo e exportação CSV.
+* Corrigido (critico): em página com cache, o link do banner vencia em até 24 h — o visitante via "Link inválido" e o clique não era contado; e as impressões dessas páginas eram recusadas. Agora o clique leva sempre ao destino cadastrado no banner (sem redirecionamento aberto) e a contagem não depende mais de chave temporária. Links antigos em cache continuam funcionando.
+* Corrigido: as opções "medir impressões" e "medir cliques" das Configurações passam a valer de fato.
+* Melhoria: robôs, monitores e pré-carregamentos não contam como impressão nem clique.
 
 = 3.1.1 =
 * Novo: botão "Adicionar novo banner" fixo na barra de navegação de todas as telas do plugin (Dashboard, Banners, Grupos, Estatísticas, Shortcodes, AdSense, Configurações, Licença), em destaque. Antes só existia o botão discreto do WordPress na lista de banners.

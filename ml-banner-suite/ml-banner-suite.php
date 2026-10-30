@@ -3,7 +3,7 @@
  * Plugin Name:       ML Banner Suite
  * Plugin URI:        https://tools.mlopesdesign.com.br
  * Description:       Gestão profissional de banners e integração isolada com Google AdSense, com grupos, shortcodes, estatísticas e atualização pelo GitHub.
- * Version:           3.1.1
+ * Version:           3.2.0
  * Author:            Marcio Lopes
  * Author URI:        https://mlopesdesign.com.br
  * Text Domain:       ml-banner-suite
@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
 }
 
 if (! defined('MLBS_VERSION')) {
-    define('MLBS_VERSION', '3.1.1');
+    define('MLBS_VERSION', '3.2.0');
 }
 
 if (! defined('MLBS_PLUGIN_FILE')) {
@@ -76,6 +76,7 @@ require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-admin-menu.php';
 require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-admin-pages.php';
 require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-banner-editor.php';
 require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-shortcodes.php';
+require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-stats.php';
 require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-license-manager.php';
 MLBS_License_Manager::boot();
 require_once MLBS_PLUGIN_DIR . 'includes/class-mlbs-plugin-updater.php';
@@ -135,6 +136,7 @@ final class ML_Banner_Suite
         $this->loader->add_action('wp_ajax_nopriv_mlbs_track_impression', $shortcodes, 'ajax_track_impression');
         $this->loader->add_action('admin_post_mlbs_banner_click', $shortcodes, 'handle_banner_click');
         $this->loader->add_action('admin_post_nopriv_mlbs_banner_click', $shortcodes, 'handle_banner_click');
+        add_action('admin_post_mlbs_export_stats', array('MLBS_Stats', 'handle_export'));
         $this->loader->add_action('admin_post_mlbs_activate_license', $license_manager, 'handle_activate_request');
         $this->loader->add_action('admin_post_mlbs_sync_license', $license_manager, 'handle_sync_request');
         $this->loader->add_action('admin_post_mlbs_remove_license', $license_manager, 'handle_remove_request');
