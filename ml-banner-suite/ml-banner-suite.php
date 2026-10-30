@@ -3,7 +3,7 @@
  * Plugin Name:       ML Banner Suite
  * Plugin URI:        https://tools.mlopesdesign.com.br
  * Description:       Gestão profissional de banners e integração isolada com Google AdSense, com grupos, shortcodes, estatísticas e atualização pelo GitHub.
- * Version:           3.1.0
+ * Version:           3.1.1
  * Author:            Marcio Lopes
  * Author URI:        https://mlopesdesign.com.br
  * Text Domain:       ml-banner-suite
@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
 }
 
 if (! defined('MLBS_VERSION')) {
-    define('MLBS_VERSION', '3.1.0');
+    define('MLBS_VERSION', '3.1.1');
 }
 
 if (! defined('MLBS_PLUGIN_FILE')) {

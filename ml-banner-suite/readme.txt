@@ -4,7 +4,7 @@ Tags: banner, banners, advertising, adsense, shortcode, carousel, slider
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,10 @@ This base package includes:
 3. Open **ML Banner Suite** in the admin sidebar.
 
 == Changelog ==
+
+= 3.1.1 =
+* Novo: botão "Adicionar novo banner" fixo na barra de navegação de todas as telas do plugin (Dashboard, Banners, Grupos, Estatísticas, Shortcodes, AdSense, Configurações, Licença), em destaque. Antes só existia o botão discreto do WordPress na lista de banners.
+* Corrigido: as abas tinham estilos diferentes conforme a tela (pílula nas telas do plugin, link azul sublinhado do WordPress nas telas Banners/Grupos/edição). Agora uma única barra de navegação, com o mesmo estilo, a mesma ordem e a aba AdSense em todas as telas.
 
 = 3.1.0 =
 * Licença pelo site tools.mlopesdesign.com.br (ML License Hub). O servidor antigo license.mlopesdesign.com.br não é mais consultado.

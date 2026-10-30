@@ -138,25 +138,6 @@ class MLBS_Assets
             return;
         }
 
-        $nav_urls = array(
-            'dashboard'  => MLBS_Helpers::admin_url('mlbs-dashboard'),
-            'banners'    => admin_url('edit.php?post_type=' . MLBS_Post_Types::POST_TYPE),
-            'groups'     => admin_url('edit-tags.php?taxonomy=mlbs_group&post_type=' . MLBS_Post_Types::POST_TYPE),
-            'statistics' => MLBS_Helpers::admin_url('mlbs-statistics'),
-            'shortcodes' => MLBS_Helpers::admin_url('mlbs-shortcodes'),
-            'settings'   => MLBS_Helpers::admin_url('mlbs-settings'),
-            'license'    => MLBS_Helpers::admin_url('mlbs-license'),
-        );
-        $nav_labels = array(
-            'dashboard'  => __('Dashboard', MLBS_TEXT_DOMAIN),
-            'banners'    => __('Banners', MLBS_TEXT_DOMAIN),
-            'groups'     => __('Grupos', MLBS_TEXT_DOMAIN),
-            'statistics' => __('Estatísticas', MLBS_TEXT_DOMAIN),
-            'shortcodes' => __('Shortcodes', MLBS_TEXT_DOMAIN),
-            'settings'   => __('Configurações', MLBS_TEXT_DOMAIN),
-            'license'    => __('Licença e Planos', MLBS_TEXT_DOMAIN),
-        );
-
         echo '<div class="notice notice-info mlbs-native-shell-notice">';
         echo '<div class="mlbs-native-shell">';
         echo '<div class="mlbs-shell-header">';
@@ -166,17 +147,12 @@ class MLBS_Assets
         echo '<p class="mlbs-subtitle">' . esc_html($subtitle) . '</p>';
         echo '</div>';
         echo '<div class="mlbs-badges">';
-        echo '<span class="mlbs-badge">GitHub Ready</span>';
-        echo '<span class="mlbs-badge">PT-BR / EN / ES</span>';
-        echo '<span class="mlbs-badge">' . esc_html__('Base estável', MLBS_TEXT_DOMAIN) . '</span>';
+        echo '<span class="mlbs-badge is-dark">GitHub Ready</span>';
+        echo '<span class="mlbs-badge is-blue">PT-BR / EN / ES</span>';
+        echo '<span class="mlbs-badge is-green">' . esc_html__('Base estável', MLBS_TEXT_DOMAIN) . '</span>';
         echo '</div>';
         echo '</div>';
-        echo '<nav class="mlbs-quick-tabs" aria-label="ML Banner Suite">';
-        foreach (array('dashboard', 'banners', 'groups', 'statistics', 'shortcodes', 'settings', 'license') as $key) {
-            $active = $key === $current ? ' is-active' : '';
-            echo '<a class="mlbs-quick-tab' . esc_attr($active) . '" href="' . esc_url($nav_urls[$key]) . '">' . esc_html($nav_labels[$key]) . '</a>';
-        }
-        echo '</nav>';
+        MLBS_Helpers::render_admin_nav($current);
         echo '</div>';
         echo '</div>';
     }
