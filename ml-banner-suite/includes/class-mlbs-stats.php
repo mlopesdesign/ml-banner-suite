@@ -311,11 +311,16 @@ class MLBS_Stats
         $out = fopen('php://output', 'w');
         fwrite($out, "\xEF\xBB\xBF");
         fputcsv($out, array('ID', 'Banner', 'Grupo', 'Situação', 'Impressões (período)', 'Cliques (período)', 'CTR % (período)', 'Impressões (desde o início)', 'Cliques (desde o início)'), ';');
+        // Evita que planilhas executem texto como fórmula (=, +, -, @).
+        $cell = function ($v) {
+            $v = (string) $v;
+            return preg_match('/^[=+\-@\t\r]/', $v) ? "'" . $v : $v;
+        };
         foreach ($rows as $r) {
             fputcsv($out, array(
                 $r['id'],
-                $r['title'],
-                implode(', ', $r['groups']),
+                $cell($r['title']),
+                $cell(implode(', ', $r['groups'])),
                 $r['display'],
                 $r['impressions'],
                 $r['clicks'],

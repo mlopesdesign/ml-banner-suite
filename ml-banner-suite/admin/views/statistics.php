@@ -261,7 +261,7 @@ $has_data = ($totals['impression'] + $totals['click']) > 0;
                             <tr>
                                 <td class="col-rank"><?php echo (int) ($i + 1); ?></td>
                                 <td class="col-banner">
-                                    <a class="mlbs-stats-banner" href="<?php echo esc_url(get_edit_post_link($r['id'])); ?>">
+                                    <a class="mlbs-stats-banner" href="<?php echo esc_url((string) get_edit_post_link($r['id'])); ?>">
                                         <span class="mlbs-stats-thumb"><?php echo $r['thumb'] ? wp_get_attachment_image($r['thumb'], 'thumbnail', false, array('alt' => '')) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
                                         <span class="mlbs-stats-title"><?php echo esc_html($r['title']); ?></span>
                                     </a>
